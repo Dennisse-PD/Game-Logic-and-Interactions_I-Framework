@@ -11,7 +11,7 @@ public class AIMovement : MonoBehaviour
     [SerializeField] private List<Transform> _points = new List<Transform>();
 
     //track the destination
-    private int _endPoint;
+    private int _destination;
 
     //store nav mesh agent reference
     private NavMeshAgent _agent;
@@ -26,11 +26,19 @@ public class AIMovement : MonoBehaviour
         {
             Debug.LogError("Nav Mesh Agent is null!");
         }
+        _agent.autoBraking = false;
+        Move();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (!_agent.pathPending)
+            Move();
+    }
+    private void Move()
+    {
+        _destination = 1;
+       _agent.destination = _points[_destination].position;
     }
 }
